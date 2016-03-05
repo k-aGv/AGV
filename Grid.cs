@@ -16,7 +16,6 @@ namespace WindowsFormsApplication1
         *get;set; method
         *Used to dynamically clone a Form UI to a non-GUIed class.
         *HAS TO BE IMPLEMENTED TO FORM_LOAD OF PARENT FORM
-        * 
         */
         public static aGv_MainForm Form { get; set; }
 
@@ -56,10 +55,14 @@ namespace WindowsFormsApplication1
             {
                 //Create panel and add it's properties
                 Panel myPanel = new Panel();
+
+                //Dynamically handle new click event to the detached Panel we created
+                myPanel.Click += new EventHandler(myPanel_Click);
+
                 Point panel_points = new Point(locationX, locationY);
                 myPanel.Location = panel_points;
-                myPanel.Width = Grid_Width + 1;//fixes the right border of panel
-                myPanel.Height = Grid_Height + 1;//fixed the bottom border of panel
+                myPanel.Width = Grid_Width + 1 ;//fixes the right border of panel
+                myPanel.Height = Grid_Height +1 ;//fixed the bottom border of panel
                 myPanel.BackColor = Color.LightGray;
                 myPanel.Cursor = Cursors.Hand;
                 location_x = locationX;
@@ -70,24 +73,40 @@ namespace WindowsFormsApplication1
 
                 //Create the graphics interface and create the rectangle-step
                 Graphics gp = myPanel.CreateGraphics();
-                Pen p = new Pen(Color.Red);
-                Rectangle myRec = new Rectangle();
-                myRec.Height = res;
-                myRec.Width = res;
+                Pen p = new Pen(Color.Black);
 
+                //We dont need rectangle...at the moment.
+                //Rectangle myRec = new Rectangle();
+                //myRec.Height = res;
+                //myRec.Width = res;
+
+
+                //Faster grid creation.All we do care about is just a visual presentation.
+                int a, b;
+                for ( a = 0; a < Grid_Width; a += res)
+                {
+                    gp.DrawLine(p, a,0, a,Grid_Width);
+                }
+                for ( b = 0; b < Grid_Height; b += res)
+                {
+                    gp.DrawLine(p, 0,b ,Grid_Height,b);
+                }
+                //Fix the known bug of left and bottom borders
+                gp.DrawLine(p, a, 0, a, Grid_Width-1);
+                gp.DrawLine(p, 0, b, Grid_Height, b-1);
 
                 //Since myPanel is handled we can make changes in real time
-                for (int i = 0; i < Grid_Width; i = i + res)
+                /*
+                for (int i = 0; i < Grid_Width; i += res)
                 {
-                    for (int j = 0; j < Grid_Height; j = j + res)
+                    for (int j = 0; j < Grid_Height; j += res)
                     {
                         myRec.X = i;
                         myRec.Y = j;
                         gp.DrawRectangle(p, myRec);
                     }
                 }
-                //if f.Controls.Add(myPanel); being here, graphics will be Cleared."Losing handle?"
-
+               
 
                 /*
                  * dynamically declare an array fulled with Points(x,y)
@@ -123,7 +142,15 @@ namespace WindowsFormsApplication1
             }
 
         }
+        protected void myPanel_Click(object sender, EventArgs e)
+        {
+            //initialize the sender
+            Panel myPanel = sender as Panel;
 
+            //Debug-Purpose messagebox
+            MessageBox.Show("Clicked on panel");
+
+        }
 
 
     }

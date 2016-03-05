@@ -37,6 +37,7 @@ namespace WindowsFormsApplication1
             myagv.owner = "Test value";
 
             grid_status_updater.Start();
+            this.Text = "k-aGv Emulator project";
 
 
         }

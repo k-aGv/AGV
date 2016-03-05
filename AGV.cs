@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
-
+using System.Windows.Forms; //same imports as form1.cs.who cares for memory
 
 
 namespace WindowsFormsApplication1
@@ -32,12 +35,12 @@ namespace WindowsFormsApplication1
          */
         public int GetLocationX(int AGV_ID)
         {
-            int x=0;//cant be null
+            int x = 0;//cant be null
             return x;
         }
         public int GetLocationY(int AGV_ID)
         {
-            int y=0;//cant be null
+            int y = 0;//cant be null
             return y;
         }
     }
