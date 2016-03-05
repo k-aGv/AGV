@@ -1,0 +1,11 @@
+C:\Users\Administrator\Desktop\AGV\AGV\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Administrator\Desktop\AGV\AGV\obj\x86\Debug\AGV.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\AGV\AGV\bin\Debug\AGV.exe
+C:\Users\Administrator\Desktop\AGV\AGV\bin\Debug\AGV.pdb
+C:\Users\Administrator\Desktop\AGV\AGV\obj\x86\Debug\AGV.exe
+C:\Users\Administrator\Desktop\AGV\AGV\obj\x86\Debug\AGV.pdb
+C:\Users\Administrator\Desktop\AGV\AGV\obj\x86\Debug\AGV.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\AGV\AGV\obj\x86\Debug\WindowsFormsApplication1.ATEI_SplashScreen.resources
+C:\Users\Administrator\Desktop\AGV\AGV\obj\x86\Debug\WindowsFormsApplication1.aGv_MainForm.resources
+C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\AGV.exe
+C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\AGV.pdb
