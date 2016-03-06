@@ -29,6 +29,7 @@ namespace WindowsFormsApplication1
         public int location_x = 0;
         public int location_y = 0;
 
+        public Point[,] array_of_points ; 
 
 
 
@@ -112,23 +113,30 @@ namespace WindowsFormsApplication1
                  * dynamically declare an array fulled with Points(x,y)
                  * (x*y)/res is produced to return the exact number of grid's blocks
                  */
+                array_of_points = new Point[Grid_Width, Grid_Height];
 
-                Point[] array_of_points = new Point[(Grid_Width * Grid_Height) / res];
+                
+                //MessageBox.Show("Size of array:" + array_of_points.Length);
+                //supposed to be 9000...30x30 cells ..*10 for 10 pixels per block
 
 
-                //Debug Comment: MessageBox.Show("Size of array:" + array_of_points.Length);
-                Point _tempPoint;//a temp point to lock
-                int cell_counter; //counter of array's cells
-                cell_counter = 0;//first block (top left)
-
-                for (int i = 0; i < Grid_Width; i = i + res)
+                /*
+                 * !WARNING!
+                 * Array sorcery ahead
+                 * --------------------
+                 * Swap i and j just to make array be filled like:
+                 * First row of array --> points of first row of grid
+                 * Second row of array --> points of second row of grid
+                 * THOSE POINTS ARE THE POINTS OF THE TOPLEFT CORNER OF EACH BLOCK!
+                 */
+                Point _tempPoint = new Point(0, 0);
+                for (int j = 0; j < Grid_Height; j = j + res)
                 {
-                    for (int j = 0; j < Grid_Height; j = j + res)
+                    for (int i = 0; i < Grid_Width; i = i + res)
                     {
-                        _tempPoint = new Point(i, j);
-                        array_of_points[cell_counter] = _tempPoint;
-                        cell_counter++;
-                        //Debug Comment: MessageBox.Show(array_of_points[cell_counter] + "");
+                        _tempPoint.X = i;
+                        _tempPoint.Y = j;
+                        array_of_points[i,j] = _tempPoint;                        
                     }
                 }
 

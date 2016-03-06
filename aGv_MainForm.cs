@@ -26,7 +26,8 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            button1.Visible = false;
+            Point_array.Visible = false;
             //Dynamically create a shadow of this form , to the classes we made
             Grid.Form = this;
             AGV.Form = this;
@@ -45,6 +46,8 @@ namespace WindowsFormsApplication1
         private void gridBtn_Click(object sender, EventArgs e)
         {
             myGrid.drawGrid(this,300, 300,200,20,10);
+            button1.Visible = true;
+            Point_array.Visible = true;
         }
 
      
@@ -61,6 +64,30 @@ namespace WindowsFormsApplication1
             }
             //propably a memory leak if timer is enabled for much time(low ram)
         }
-        
+
+        private void add_agv_Click(object sender, EventArgs e)
+        {
+            Point sPoint=new Point(50,50);
+            myagv.CreateAGV(myGrid,sPoint);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int i=0, j;
+            int row = 1;
+            for (j = 0; j < 300; j += 10)
+            {
+                
+                Point_array.Text += "Row:" + row+"\r\n";
+                
+                for ( i = 0; i < 300; i += 10)
+                {
+                    Point_array.Text += myGrid.array_of_points[i, j] + " ";
+                }
+                Point_array.Text += "\r\n"+"\r\n";
+                row++;
+            }
+        }
+
     }
 }

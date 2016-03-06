@@ -43,5 +43,10 @@ namespace WindowsFormsApplication1
             int y = 0;//cant be null
             return y;
         }
+        public bool CreateAGV(Grid handledGrid, Point StartPoint)
+        {
+
+            return true;
+        }
     }
 }
