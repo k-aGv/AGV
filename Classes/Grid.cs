@@ -175,7 +175,6 @@ namespace WindowsFormsApplication1
          * tricky way to break the nested loop.
          * -Why no break?because a single break will break only the nested for.
          * -why no goto?because 2016.
-         * We have to use return; so the void function will end.
          */
         protected Point getClickPoint(int _x,int _y)
         {
