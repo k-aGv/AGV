@@ -87,6 +87,7 @@
             this.Point_array.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.Point_array.Size = new System.Drawing.Size(468, 283);
             this.Point_array.TabIndex = 5;
+        
             // 
             // button1
             // 

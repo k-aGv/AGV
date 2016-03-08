@@ -73,6 +73,7 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //label:just for debug 
             int i=0, j;
             int row = 1;
             for (j = 0; j < 300; j += 10)
@@ -87,7 +88,12 @@ namespace WindowsFormsApplication1
                 Point_array.Text += "\r\n"+"\r\n";
                 row++;
             }
+            //end of label
         }
+
+  
+
+     
 
     }
 }

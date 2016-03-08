@@ -58,7 +58,7 @@ namespace WindowsFormsApplication1
                 Panel myPanel = new Panel();
 
                 //Dynamically handle new click event to the detached Panel we created
-                myPanel.Click += new EventHandler(myPanel_Click);
+                myPanel.MouseClick += new MouseEventHandler(myPanel_MouseClick);
 
                 Point panel_points = new Point(locationX, locationY);
                 myPanel.Location = panel_points;
@@ -150,13 +150,14 @@ namespace WindowsFormsApplication1
             }
 
         }
-        protected void myPanel_Click(object sender, EventArgs e)
+        protected void myPanel_MouseClick(object sender, MouseEventArgs e)
         {
             //initialize the sender
             Panel myPanel = sender as Panel;
 
             //Debug-Purpose messagebox
             MessageBox.Show("Clicked on panel");
+           
 
         }
 
