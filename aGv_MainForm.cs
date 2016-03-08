@@ -73,6 +73,7 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             //label:just for debug 
             int i=0, j;
             int row = 1;

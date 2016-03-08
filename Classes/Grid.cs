@@ -29,7 +29,8 @@ namespace WindowsFormsApplication1
         public int location_x = 0;
         public int location_y = 0;
 
-        public Point[,] array_of_points ; 
+        public Point[,] array_of_points ;
+        public int resolution;
 
 
 
@@ -65,7 +66,7 @@ namespace WindowsFormsApplication1
                 myPanel.Width = Grid_Width + 1 ;//fixes the right border of panel
                 myPanel.Height = Grid_Height +1 ;//fixed the bottom border of panel
                 myPanel.BackColor = Color.LightGray;
-                myPanel.Cursor = Cursors.Hand;
+                //myPanel.Cursor = Cursors.Hand;
                 location_x = locationX;
                 location_y = locationY;
 
@@ -81,7 +82,7 @@ namespace WindowsFormsApplication1
                 //myRec.Height = res;
                 //myRec.Width = res;
 
-
+                resolution = res;
                 //Faster grid creation.All we do care about is just a visual presentation.
                 int a, b;
                 for ( a = 0; a < Grid_Width; a += res)
@@ -150,15 +151,62 @@ namespace WindowsFormsApplication1
             }
 
         }
+
+        //protected functions are used to prevent any call of the functions FROM the form
+        //protected actually means : this functions is a 'private' function used only by the class where is declared
         protected void myPanel_MouseClick(object sender, MouseEventArgs e)
         {
             //initialize the sender
             Panel myPanel = sender as Panel;
+            Point clickedPoint;
 
             //Debug-Purpose messagebox
-            MessageBox.Show("Clicked on panel");
-           
+           // MessageBox.Show("Clicked on panel");
 
+            clickedPoint=getClickPoint(e.X, e.Y);
+            Graphics gp = myPanel.CreateGraphics();
+            SolidBrush b = new SolidBrush(Color.Black);
+            gp.FillRectangle(b, clickedPoint.X, clickedPoint.Y, resolution,resolution);
+
+        }
+
+
+        /*
+         * tricky way to break the nested loop.
+         * -Why no break?because a single break will break only the nested for.
+         * -why no goto?because 2016.
+         * We have to use return; so the void function will end.
+         */
+        protected Point getClickPoint(int _x,int _y)
+        {
+            int i, j;
+            for (j = 0; j < 300; j += resolution)
+            {
+                for (i =0; i < 300; i += resolution)
+                {
+                    //sorcery coding ahead!
+                    //====================
+                    //get only the .X of the point. we cant use the operator '<' between Point class objects
+                    if (_x <= array_of_points[i, j].X && _y <= array_of_points[i, j].Y)
+                    {
+                        //MessageBox.Show(array_of_points[i, j] + "");
+
+                       /*For a strange reason it cant accept: =new Point (array_of_points[i,j])
+                        *even our array is declared as Point. 
+                        *Failure on Point structure.Microsoft please
+                        */
+
+                        //more sorcery: -resolution is used for balancing the topleft point
+                        Point _p = new Point(array_of_points[i, j].X-resolution,array_of_points[i,j].Y-resolution);
+                        return _p;
+                    }
+
+                }
+
+            }
+            //....just in case
+            Point failPoint = new Point(-1, -1);
+            return failPoint;
         }
 
 
