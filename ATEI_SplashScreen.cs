@@ -21,8 +21,11 @@ namespace WindowsFormsApplication1
 
         private void SplashScreen_Load(object sender, EventArgs e)
         {
+            //Same BackColor & TransparencyKey returns a transparent form.Transparent Key is
+            //supposed to be the color which u want to be transparent.So backcolor=transparentkey
             this.BackColor = Color.Gray;
             this.TransparencyKey = Color.Gray;
+            //1sec=1000ms
             Thread.Sleep(1000);
         }
 
