@@ -92,6 +92,12 @@ namespace WindowsFormsApplication1
             //end of label
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Point _p = new Point(30,30);
+            myagv.CreateAGV(myGrid, _p);
+        }
+
   
 
      

@@ -31,7 +31,7 @@ namespace WindowsFormsApplication1
 
         public Point[,] array_of_points ;
         public int resolution;
-
+        public Panel myPanel;
 
 
         //class functions
@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
             else
             {
                 //Create panel and add it's properties
-                Panel myPanel = new Panel();
+                myPanel = new Panel();
 
                 //Dynamically handle new click event to the detached Panel we created
                 myPanel.MouseClick += new MouseEventHandler(myPanel_MouseClick);

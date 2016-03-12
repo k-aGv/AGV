@@ -36,6 +36,7 @@
             this.add_agv = new System.Windows.Forms.Button();
             this.Point_array = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // gridBtn
@@ -53,7 +54,7 @@
             this.grid_status.Location = new System.Drawing.Point(12, 110);
             this.grid_status.Multiline = true;
             this.grid_status.Name = "grid_status";
-            this.grid_status.Size = new System.Drawing.Size(156, 185);
+            this.grid_status.Size = new System.Drawing.Size(156, 139);
             this.grid_status.TabIndex = 2;
             // 
             // label1
@@ -87,7 +88,6 @@
             this.Point_array.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.Point_array.Size = new System.Drawing.Size(468, 283);
             this.Point_array.TabIndex = 5;
-        
             // 
             // button1
             // 
@@ -99,11 +99,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(13, 265);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(155, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "create agv";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // aGv_MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 336);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Point_array);
             this.Controls.Add(this.add_agv);
@@ -128,6 +139,7 @@
         private System.Windows.Forms.Button add_agv;
         private System.Windows.Forms.TextBox Point_array;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

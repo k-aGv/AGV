@@ -45,7 +45,10 @@ namespace WindowsFormsApplication1
         }
         public bool CreateAGV(Grid handledGrid, Point StartPoint)
         {
-
+            Point _temp = new Point(handledGrid.grid_res,handledGrid.grid_res);
+            Graphics gp = handledGrid.myPanel.CreateGraphics();
+            SolidBrush b = new SolidBrush(Color.Red);
+            gp.FillRectangle(b, StartPoint.X, StartPoint.Y, handledGrid.grid_res, handledGrid.grid_res);
             return true;
         }
     }
