@@ -33,10 +33,10 @@
             this.grid_status = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.grid_status_updater = new System.Windows.Forms.Timer(this.components);
-            this.add_agv = new System.Windows.Forms.Button();
             this.Point_array = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // gridBtn
@@ -51,7 +51,7 @@
             // 
             // grid_status
             // 
-            this.grid_status.Location = new System.Drawing.Point(12, 110);
+            this.grid_status.Location = new System.Drawing.Point(12, 185);
             this.grid_status.Multiline = true;
             this.grid_status.Name = "grid_status";
             this.grid_status.Size = new System.Drawing.Size(156, 139);
@@ -60,7 +60,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(55, 94);
+            this.label1.Location = new System.Drawing.Point(55, 169);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 3;
@@ -69,15 +69,6 @@
             // grid_status_updater
             // 
             this.grid_status_updater.Tick += new System.EventHandler(this.grid_status_updater_Tick);
-            // 
-            // add_agv
-            // 
-            this.add_agv.Location = new System.Drawing.Point(44, 48);
-            this.add_agv.Name = "add_agv";
-            this.add_agv.Size = new System.Drawing.Size(93, 32);
-            this.add_agv.TabIndex = 4;
-            this.add_agv.Text = "Add AGV";
-            this.add_agv.UseVisualStyleBackColor = true;
             // 
             // Point_array
             // 
@@ -101,7 +92,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(13, 265);
+            this.button2.Location = new System.Drawing.Point(13, 65);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(155, 23);
             this.button2.TabIndex = 7;
@@ -109,15 +100,25 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(12, 101);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(156, 23);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "move to end";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // aGv_MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 336);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Point_array);
-            this.Controls.Add(this.add_agv);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.grid_status);
             this.Controls.Add(this.gridBtn);
@@ -136,10 +137,10 @@
         private System.Windows.Forms.TextBox grid_status;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer grid_status_updater;
-        private System.Windows.Forms.Button add_agv;
         private System.Windows.Forms.TextBox Point_array;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }
 

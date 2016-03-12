@@ -94,9 +94,26 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Point _p = new Point(30,30);
-            myagv.CreateAGV(myGrid, _p);
+            //Point _p = new Point(0,0);
+           // myagv.CreateAGV(myGrid, _p);
+
+            //Overload call()
+            
+            myagv.CreateAGV(myGrid, 0, 0);
+            
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //Point _p = new Point(300,300);
+            // myagv.moveToEnd(myGrid, _p);
+
+            //Overload Call()
+            myGrid.refreshGrid();
+            myagv.moveToEnd(myGrid, 300, 300);
+        }
+
+        
 
   
 

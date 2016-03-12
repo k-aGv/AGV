@@ -20,19 +20,31 @@ namespace WindowsFormsApplication1
         public static aGv_MainForm Form { get; set; }
 
 
-        /*
-         * Random vars just to be tested
-         */
+        //size at blocks
+        public int x_blocks = 0;
+        public int y_blocks = 0;
+
+        //size at pixels
         public int x_size = 0;
-        public int y_size = 0;
+        public int y_size = 0; 
+
         public int grid_res = 0;
         public int location_x = 0;
         public int location_y = 0;
 
         public Point[,] array_of_points ;
         public int resolution;
-        public Panel myPanel;
+        public Panel gridPanel;
 
+        /*
+         * Create 2 instances of graphics.
+         * Why?
+         * 1 instance is only for the grid...the lines.
+         * other instance will be the agv movement.
+         * This will help us use the .Clear() method safely
+         */
+        public Graphics gridGraphics;
+        protected Pen gridpen = new Pen(Color.Black);
 
         //class functions
 
@@ -56,25 +68,26 @@ namespace WindowsFormsApplication1
             else
             {
                 //Create panel and add it's properties
-                myPanel = new Panel();
+                gridPanel = new Panel();
 
                 //Dynamically handle new click event to the detached Panel we created
-                myPanel.MouseClick += new MouseEventHandler(myPanel_MouseClick);
+                gridPanel.MouseClick += new MouseEventHandler(myPanel_MouseClick);
 
                 Point panel_points = new Point(locationX, locationY);
-                myPanel.Location = panel_points;
-                myPanel.Width = Grid_Width + 1 ;//fixes the right border of panel
-                myPanel.Height = Grid_Height +1 ;//fixed the bottom border of panel
-                myPanel.BackColor = Color.LightGray;
+                gridPanel.Location = panel_points;
+                gridPanel.Width = Grid_Width + 1;//fixes the right border of panel
+                gridPanel.Height = Grid_Height + 1;//fixed the bottom border of panel
+                gridPanel.BackColor = Color.LightGray;
                 //myPanel.Cursor = Cursors.Hand;
                 location_x = locationX;
                 location_y = locationY;
 
                 //send it to our Main form
-                Handled_Form.Controls.Add(myPanel);
+                Handled_Form.Controls.Add(gridPanel);
 
                 //Create the graphics interface and create the rectangle-step
-                Graphics gp = myPanel.CreateGraphics();
+                gridGraphics = gridPanel.CreateGraphics();
+                
                 Pen p = new Pen(Color.Black);
 
                 //We dont need rectangle...at the moment.
@@ -87,15 +100,15 @@ namespace WindowsFormsApplication1
                 int a, b;
                 for ( a = 0; a < Grid_Width; a += res)
                 {
-                    gp.DrawLine(p, a,0, a,Grid_Width);
+                    gridGraphics.DrawLine(p, a, 0, a, Grid_Width);
                 }
                 for ( b = 0; b < Grid_Height; b += res)
                 {
-                    gp.DrawLine(p, 0,b ,Grid_Height,b);
+                    gridGraphics.DrawLine(p, 0, b, Grid_Height, b);
                 }
                 //Fix the known bug of left and bottom borders
-                gp.DrawLine(p, a, 0, a, Grid_Width-1);
-                gp.DrawLine(p, 0, b, Grid_Height, b-1);
+                gridGraphics.DrawLine(p, a, 0, a, Grid_Width - 1);
+                gridGraphics.DrawLine(p, 0, b, Grid_Height, b - 1);
 
                 //Since myPanel is handled we can make changes in real time
                 /*
@@ -142,9 +155,11 @@ namespace WindowsFormsApplication1
                 }
 
                 //Update class' variables
-                x_size = Grid_Width / res;
-                y_size = Grid_Height / res;
-                grid_res = res;
+                x_size = Grid_Width;
+                y_size = Grid_Height;
+                x_blocks = Grid_Width / res;
+                y_blocks = Grid_Height / res;
+                
 
                 //everything done as we'd liked to.
                 return true;
@@ -164,9 +179,9 @@ namespace WindowsFormsApplication1
            // MessageBox.Show("Clicked on panel");
 
             clickedPoint=getClickPoint(e.X, e.Y);
-            Graphics gp = myPanel.CreateGraphics();
+            gridGraphics = myPanel.CreateGraphics();
             SolidBrush b = new SolidBrush(Color.Black);
-            gp.FillRectangle(b, clickedPoint.X, clickedPoint.Y, resolution,resolution);
+            gridGraphics.FillRectangle(b, clickedPoint.X, clickedPoint.Y, resolution, resolution);
 
         }
 
@@ -207,6 +222,20 @@ namespace WindowsFormsApplication1
             Point failPoint = new Point(-1, -1);
             return failPoint;
         }
+        public void refreshGrid()
+        {
+            gridGraphics.Clear(gridPanel.BackColor);
+            int a, b;
+            for (a = 0; a < x_size; a += resolution)
+            {
+                gridGraphics.DrawLine(gridpen, a, 0, a, x_size);
+            }
+            for (b = 0; b < y_size; b += resolution)
+            {
+                gridGraphics.DrawLine(gridpen, 0, b, y_size, b);
+            }
+        }
+       
 
 
     }

@@ -3,3 +3,6 @@ C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Release\WindowsFormsApplication
 C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Release\WindowsFormsApplication1.ATEI_SplashScreen.resources
 C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Release\k-aGv.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Release\AGV.exe
+C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Release\AGV.exe
+C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Release\AGV.pdb
+C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Release\AGV.pdb
