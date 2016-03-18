@@ -6,3 +6,6 @@ C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Release\AGV.exe
 C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Release\AGV.exe
 C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Release\AGV.pdb
 C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Release\AGV.pdb
+C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Release\Classes\Sensors.cs
+C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Release\Classes\AGV.cs
+C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Release\Classes\Grid.cs

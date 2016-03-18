@@ -52,8 +52,15 @@
     <Compile Include="aGv_MainForm.Designer.cs">
       <DependentUpon>aGv_MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\AGV.cs" />
-    <Compile Include="Classes\Grid.cs" />
+    <Compile Include="Classes\AGV.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Classes\Sensors.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Classes\Grid.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ATEI_SplashScreen.cs">

@@ -16,12 +16,16 @@ namespace WindowsFormsApplication1
         AGV myagv = new AGV();
         Grid myGrid = new Grid();
 
+        
+        
         public aGv_MainForm()
         {
             ATEI_SplashScreen Splash = new ATEI_SplashScreen();
             Splash.Show();
             Splash.Dispose();
             InitializeComponent();
+
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -112,6 +116,13 @@ namespace WindowsFormsApplication1
             myGrid.refreshGrid();
             myagv.moveToEnd(myGrid, 300, 300);
         }
+
+        private void Drawing_State_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+      
 
         
 
