@@ -12,6 +12,9 @@ namespace WindowsFormsApplication1
 {
     class AGV
     {
+
+
+
         /*
          *get;set; method
          *Used to dynamically declare a Form UI to a non-GUIed class.
@@ -25,13 +28,20 @@ namespace WindowsFormsApplication1
          * Random vars just to be tested
          */
         public string name;
-        public string owner;
         public int AGV_speed;
-       // public int LocationX;
-       // public int LocationY;
+        public int LocationX;
+        public int LocationY;
+        public int endLocationX;
+        public int endLocationY;
 
-      
-        
+        public bool isFinished = false;
+        protected SolidBrush anim_brush = new SolidBrush(Color.Green);
+
+
+        public int startX;
+        public int startY;
+        public Graphics agvGraphics;
+
 
 
         /*
@@ -39,75 +49,299 @@ namespace WindowsFormsApplication1
          */
 
         //Declaration of CreateAGV()
-        public bool CreateAGV(Grid handledGrid, Point StartPoint)
+        public bool CreateAGV(Grid handledGrid, string agvName, int startx, int starty)
         {
-            if (handledGrid==null)
+            if (handledGrid == null)
             {
                 MessageBox.Show("DEBUG:Unhandled Grid.Did you create it ?");
                 return false;
             }
+
             SolidBrush b = new SolidBrush(Color.Red);
-            handledGrid.gridGraphics.FillRectangle(b
-                , StartPoint.X
-                , StartPoint.Y
+            agvGraphics = handledGrid.gridGraphics;
+            agvGraphics.FillRectangle(b
+                , startx
+                , starty
                 , handledGrid.resolution
                 , handledGrid.resolution);
+
+
+
+            startX = startx;
+            startY = starty;
+            name = agvName;
+
             return true;
 
         }
-        //Overload CreateAGV()
-        public bool CreateAGV(Grid handledGrid, int start_x,int start_y)
-        {
-            if (handledGrid.gridPanel==null)
-            {
-                MessageBox.Show("DEBUG:Unhandled Grid.Did you create it ?");
-                return false;
-            }
-            SolidBrush b = new SolidBrush(Color.Red);
-            handledGrid.gridGraphics.FillRectangle(b, start_x, start_y, handledGrid.resolution, handledGrid.resolution);
-            return true;
 
-        }
 
         //declaration of moveToEnd()
-        public bool moveToEnd(Grid handledGrid,Point endPoint)
+        public bool moveToEnd(Grid handledGrid, Point startPoint, Point endPoint)
         {
-            if (handledGrid.gridPanel == null)
+
+            int i = startPoint.X / handledGrid.resolution, j = startPoint.Y / handledGrid.resolution;
+            endLocationX = endPoint.X;
+            endLocationY = endPoint.Y;
+            //0 -> keli  = keno
+            //3 -> keli  = empodio
+            //2 -> exit
+            //1 -> current
+
+
+            bool ob_left_found = false;
+            bool ob_down_found = false;
+            bool failed_down = false;
+            bool found = false;
+
+            while (!found)
             {
-                MessageBox.Show("DEBUG:Unhandled Grid.Did you create it ?");
-                return false;
+                if (i < handledGrid.x_blocks - 1 && ob_down_found == false) //an exeis perithwrio na pas 1 keli deksia prin vgeis ektos
+                {
+                    if (handledGrid.block_type[i + 1, j] != 3 && failed_down == false) //an sta deksia den vreis empodio
+                    {
+                        if (handledGrid.block_type[i + 1, j] == 2) //des an to deksi keli einai i eksodos
+                        {
+
+                            found = true;
+                        }
+                        else
+                        {
+                            handledGrid.block_type[i + 1, j] = 1; //pigaine
+                            handledGrid.block_type[i, j] = 0;
+                            i++;
+                            agv_anim(handledGrid, i, j);
+                        }
+                    }
+                    else //an vreis empodio sta deksia
+                    {
+                        if (j < handledGrid.y_blocks - 1) //an exeis perithwrio na kateveis xwris na vgeis ektos oriwn
+                        {
+                            if (handledGrid.block_type[i, j + 1] != 3 && ob_left_found == false) //an sto katw keli de vreis empodio
+                            {
+                                if (handledGrid.block_type[i, j + 1] == 2) //des an to katw keli einai i eksodos
+                                {
+
+                                    found = true;
+                                }
+                                else
+                                {
+                                    handledGrid.block_type[i, j + 1] = 1;//pigaine
+                                    handledGrid.block_type[i, j] = 0;
+                                    j++;
+                                    failed_down = false;
+                                    agv_anim(handledGrid, i, j);
+                                }
+                            }
+                            else //an vreis empodio pros ta katw
+                            {
+                                if (handledGrid.block_type[i - 1, j] == 3)
+                                {
+                                    ob_left_found = true;
+                                    handledGrid.block_type[i, j - 1] = 1;
+                                    handledGrid.block_type[i, j] = 0;
+                                    j--;
+                                    agv_anim(handledGrid, i, j);
+                                }
+                                else
+                                {
+                                    ob_left_found = false;
+                                    handledGrid.block_type[i - 1, j] = 1; //pigaine ena keli aristera
+                                    handledGrid.block_type[i, j] = 0;
+                                    i--;
+                                    failed_down = true;
+                                    agv_anim(handledGrid, i, j);
+                                }
+                                if (handledGrid.block_type[i, j + 1] != 3 && ob_left_found == false) //kai des an mporeis na pas pros ta katw
+                                {
+                                    if (handledGrid.block_type[i, j + 1] == 2) //des an to katw keli einai i eksodos
+                                    {
+
+                                        found = true;
+                                    }
+                                    else
+                                    {
+                                        handledGrid.block_type[i, j + 1] = 1; //an ginetai, pigaine
+                                        handledGrid.block_type[i, j] = 0;
+                                        j++;
+                                        failed_down = false;
+                                        agv_anim(handledGrid, i, j);
+                                    }
+                                }
+                            }
+                        }
+                        else //an den exeis perithwrio na kateveis kai allo (vgaineis ektos oriwn)
+                        {
+                            if (handledGrid.block_type[i, j - 1] != 3) //an sto panw keli den uparxei empodio
+                            {
+                                handledGrid.block_type[i, j - 1] = 1;
+                                handledGrid.block_type[i, j] = 0;
+                                j--;
+                                agv_anim(handledGrid, i, j);
+                            }
+                            //na valw logiki gia "else"
+                        }
+                    }
+                }
+                else //an den exeis perithwrio na pas allo deksia - vgaineis ektos oriwn
+                {
+                    if (j < handledGrid.y_blocks - 1) //an exeis perithwrio na kateveis xwris na vgeis ektos oriwn
+                    {
+                        if (handledGrid.block_type[i, j + 1] != 3) //an mporeis na pas pros ta katw
+                        {
+                            if (handledGrid.block_type[i, j + 1] == 2) //des an to katw keli einai i eksodos
+                            {
+                                //MessageBox.Show("sdcs");
+                                found = true;
+                            }
+                            else
+                            {
+                                handledGrid.block_type[i, j + 1] = 1; //pigaine
+                                handledGrid.block_type[i, j] = 0;
+                                j++;
+                                agv_anim(handledGrid, i, j);
+                            }
+                        }
+                        else //an den mporeis na pas pros ta katw
+                        {
+                            failed_down = true;
+                            if (j < handledGrid.y_blocks - 1)
+                            {
+                                if (ob_down_found == false)
+                                {
+                                    handledGrid.block_type[i - 1, j] = 1; //pigaine ena keli aristera
+                                    handledGrid.block_type[i, j] = 0;
+                                    i--;
+                                    agv_anim(handledGrid, i, j);
+                                    if (handledGrid.block_type[i, j + 1] != 3) //kai des an mporeis na pas pros ta katw
+                                    {
+                                        if (handledGrid.block_type[i, j + 1] == 2) //des an to katw keli einai i eksodos
+                                            found = true;
+                                        else
+                                        {
+                                            handledGrid.block_type[i, j + 1] = 1; //pigaine
+                                            handledGrid.block_type[i, j] = 0;
+                                            j++;
+                                            failed_down = false;
+                                            agv_anim(handledGrid, i, j);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        handledGrid.block_type[i - 1, j] = 1;
+                                        handledGrid.block_type[i, j] = 0;
+                                        i--;
+                                        failed_down = true;
+                                        agv_anim(handledGrid, i, j);
+                                    }
+                                }
+                                else
+                                {
+                                    ob_down_found = false;
+                                    handledGrid.block_type[i + 1, j] = 1;
+                                    handledGrid.block_type[i, j] = 0;
+                                    i++;
+                                    agv_anim(handledGrid, i, j);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (handledGrid.block_type[i + 1, j] == 2)
+                        {
+
+                            found = true;
+                        }
+                    }
+                }
             }
-            SolidBrush b = new SolidBrush(Color.Red);
-            handledGrid.gridGraphics.FillRectangle(b
-                ,endPoint.X - handledGrid.resolution
-                ,endPoint.Y - handledGrid.resolution
-                ,handledGrid.x_blocks 
-                ,handledGrid.y_blocks 
-                );
+            handledGrid.gridGraphics.FillRectangle(anim_brush,
+                handledGrid.x_size - handledGrid.resolution,
+                handledGrid.y_size - handledGrid.resolution,
+                handledGrid.resolution, handledGrid.resolution);
+            isFinished = true;
+
+
             return true;
         }
-        //Overload of moveToEnd()
-        public bool moveToEnd(Grid handledGrid, int x_end, int y_end)
+
+
+        private void agv_anim(Grid _grid, int cellx, int celly) //int xsize, int ysize, int res)
         {
-            if (handledGrid.gridPanel == null)
+            LocationX = cellx;
+            LocationY = celly;
+            for (int j = 0; j < _grid.x_size; j = j + _grid.resolution)
             {
-                MessageBox.Show("DEBUG:Unhandled Grid.Did you create it ?");
-                return false;
+                for (int i = 0; i < _grid.y_size; i = i + _grid.resolution)
+                {
+                    if (cellx * _grid.resolution == i && celly * _grid.resolution == j)
+                    {
+                        _grid.gridGraphics.FillRectangle(
+                            anim_brush,
+                            _grid.array_of_points[i, j].X,
+                            _grid.array_of_points[i, j].Y, 
+                            _grid.resolution,
+                            _grid.resolution);
+                    }
+
+                }
             }
-            SolidBrush b = new SolidBrush(Color.Red);
+            Application.DoEvents();
+            System.Threading.Thread.Sleep(100);
+            Application.DoEvents();
+        }
+
+
+
+
+        public class Watcher:AGV
+        {
+           
+            protected int i = 1;
+            public string[] agvNames;
+            public Timer agvWatcher = new Timer();
             
-            handledGrid.gridGraphics.FillRectangle(b
-                ,x_end - handledGrid.resolution
-                ,y_end - handledGrid.resolution
-                ,handledGrid.x_blocks 
-                ,handledGrid.y_blocks
-                );
-            return true;
+            public Label watcherLabel = new Label();
+   
+            public Form cameFrom;
+            public void setNames(string agv_name)
+            {
+
+                agvNames = new string[i];
+                agvNames[i] = agv_name;
+                i++;
+            }
+            public Point agvLocation(AGV agvInfo)
+            {
+                Point Location = new Point(agvInfo.LocationX, agvInfo.LocationY);
+                return Location;
+            }
+            public void _Start(Form f)
+            {
+                agvWatcher.Interval = 100;
+           
+                cameFrom = f;
+                agvWatcher.Tick += new EventHandler(agvWatcher_Tick);
+                agvWatcher.Start();
+
+            }
+            public void Stop()
+            {
+                agvWatcher.Stop();
+            }
+
+            private void agvWatcher_Tick(object sender, EventArgs e)
+            {
+               
+                    Point L = new Point(600, 287);
+                    watcherLabel.Location = L;
+                   // watcherLabel.Text = "pasxalis";
+                    watcherLabel.Text = LocationX + " " + LocationY;
+                    cameFrom.Controls.Add(watcherLabel);   
+            }
         }
-
-
-
-        
-
     }
+
+
 }

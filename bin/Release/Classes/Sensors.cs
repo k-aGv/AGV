@@ -12,11 +12,16 @@ namespace WindowsFormsApplication1.Classes
         {
             if (type == "obstacle")
             {
+                //vehicle.
                // vehicle.GetLocationX
             }
             else if (type == "example")
             { 
             
+            }
+            else if (type =="agv")
+            {
+                //me sensor megaluteris aktinas
             }
 
 

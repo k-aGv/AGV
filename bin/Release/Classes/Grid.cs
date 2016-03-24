@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
         *HAS TO BE IMPLEMENTED TO FORM_LOAD OF PARENT FORM
         */
         public static aGv_MainForm Form { get; set; }
-
+        
 
         //size at blocks
         public int x_blocks = 0;
@@ -28,13 +28,14 @@ namespace WindowsFormsApplication1
         public int x_size = 0;
         public int y_size = 0; 
 
-        public int grid_res = 0;
         public int location_x = 0;
         public int location_y = 0;
 
         public Point[,] array_of_points ;
         public int resolution;
         public Panel gridPanel;
+
+        public int[,] block_type;
 
         protected CheckBox cb;
         protected bool drawingObstacle = false;
@@ -65,6 +66,17 @@ namespace WindowsFormsApplication1
          *          ,locationY location Y of panel
          *          ,pixels per block of grid)
          */
+
+        /// <summary>
+        /// madafaka my shit
+        /// </summary>
+        /// <param name="Handled_Form">Handled form to be used </param>
+        /// <param name="Grid_Width">Desired grid's width</param>
+        /// <param name="Grid_Height"></param>
+        /// <param name="locationX"></param>
+        /// <param name="locationY"></param>
+        /// <param name="res"></param>
+        /// <returns></returns>
         public bool drawGrid(Form Handled_Form, int Grid_Width, int Grid_Height, int locationX, int locationY, int res)
         {
             if (Handled_Form == null)
@@ -74,6 +86,19 @@ namespace WindowsFormsApplication1
             }
             else
             {
+                block_type = new int[Grid_Width/res, Grid_Height/res];
+                int k=0,l=0;
+                for ( k = 0; k < Grid_Width / res; k ++)
+                {
+                    for ( l = 0; l < Grid_Height / res; l ++)
+                    {
+                            block_type[k,l] = 0;
+                    }
+                }
+                block_type[k-1,l-1] = 2;
+
+
+
                 //Create panel and add it's properties
                 gridPanel = new Panel();
                 //Create the Checkbox.Why here?cuz we want to handle it's event."just a fast solution"
@@ -217,12 +242,15 @@ namespace WindowsFormsApplication1
                 //initialize the sender
                 Panel myPanel = sender as Panel;
                 Point clickedPoint;
-
+               // block_type=new int[x_blocks,y_blocks];
 
                 clickedPoint = getClickPoint(e.X, e.Y);
                 gridGraphics = myPanel.CreateGraphics();
                 SolidBrush b = new SolidBrush(Color.Black);
                 gridGraphics.FillRectangle(b, clickedPoint.X, clickedPoint.Y, resolution, resolution);
+
+                block_type[clickedPoint.X/resolution, clickedPoint.Y/resolution] = 3;
+                
             } 
         }
 
@@ -235,14 +263,14 @@ namespace WindowsFormsApplication1
         protected Point getClickPoint(int _x,int _y)
         {
             int i, j;
-            for (j = 0; j < 300; j += resolution)
+            for (j = 0; j < y_size; j += resolution)
             {
-                for (i =0; i < 300; i += resolution)
+                for (i =0; i <x_size; i += resolution)
                 {
                     //sorcery coding ahead!
                     //====================
                     //get only the .X of the point. we cant use the operator '<' between Point class objects
-                    if (_x <= array_of_points[i, j].X && _y <= array_of_points[i, j].Y)
+                    if (_x <= array_of_points[i, j].X+resolution && _y <= array_of_points[i, j].Y+resolution)
                     {
                         //MessageBox.Show(array_of_points[i, j] + "");
 
@@ -252,7 +280,7 @@ namespace WindowsFormsApplication1
                         */
 
                         //more sorcery: -resolution is used for balancing the topleft point
-                        Point _p = new Point(array_of_points[i, j].X-resolution,array_of_points[i,j].Y-resolution);
+                        Point _p = new Point(array_of_points[i, j].X,array_of_points[i,j].Y);
                         return _p;
                     }
 

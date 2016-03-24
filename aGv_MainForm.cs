@@ -14,10 +14,13 @@ namespace WindowsFormsApplication1
     {
         //initialize our classes
         AGV myagv = new AGV();
+        AGV youragv = new AGV();
+
+        Watcher myagvWatcher = new Watcher();
+        Watcher youragvWatcher = new Watcher();
+
         Grid myGrid = new Grid();
 
-        
-        
         public aGv_MainForm()
         {
             ATEI_SplashScreen Splash = new ATEI_SplashScreen();
@@ -36,11 +39,11 @@ namespace WindowsFormsApplication1
             Grid.Form = this;
             AGV.Form = this;
             
+            
             //example shit
             myagv.AGV_speed = 1; //1block per sec
             myagv.name = "Test value";
-            myagv.owner = "Test value";
-
+            
             grid_status_updater.Start();
             this.Text = "k-aGv Emulator project";
 
@@ -49,9 +52,12 @@ namespace WindowsFormsApplication1
 
         private void gridBtn_Click(object sender, EventArgs e)
         {
+            
             myGrid.drawGrid(this,300, 300,200,20,10);
+            
             button1.Visible = true;
             Point_array.Visible = true;
+            
         }
 
      
@@ -60,7 +66,7 @@ namespace WindowsFormsApplication1
             string status =
              myGrid.x_size + " blocks on X axes.\r\n" +
              myGrid.y_size + " blocks on Y axes.\r\n" +
-             myGrid.grid_res + " pixels per block/step.\r\n" +
+             myGrid.resolution + " pixels per block/step.\r\n" +
             "Grid's location:(" + myGrid.location_x+","+myGrid.location_y+")";
             if (status != grid_status.Text)
             {
@@ -69,12 +75,7 @@ namespace WindowsFormsApplication1
             //propably a memory leak if timer is enabled for much time(low ram)
         }
 
-        private void add_agv_Click(object sender, EventArgs e)
-        {
-            Point sPoint=new Point(50,50);
-            myagv.CreateAGV(myGrid,sPoint);
-        }
-
+     
         private void button1_Click(object sender, EventArgs e)
         {
             
@@ -98,37 +99,33 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //Point _p = new Point(0,0);
-           // myagv.CreateAGV(myGrid, _p);
-
-            //Overload call()
-            
-            myagv.CreateAGV(myGrid, 0, 0);
-            
+            myagv.CreateAGV(myGrid,"tsipras", 0,0);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+
+        private void start_Click(object sender, EventArgs e)
         {
-            //Point _p = new Point(300,300);
-            // myagv.moveToEnd(myGrid, _p);
+            Point _end = new Point(300, 300);
 
-            //Overload Call()
-            myGrid.refreshGrid();
-            myagv.moveToEnd(myGrid, 300, 300);
+
+            Point _start = new Point(myagv.startX, myagv.startY);
+            myagvWatcher.initialize(this, myagv);
+
+            myagvWatcher._Start(); //tixenei to .Start() na exei idio onoma me to kanoniko-official event
+            
+            myagv.moveToEnd(myGrid,_start, _end);
+           
+
+            Point _start2 = new Point(youragv.startX, youragv.startY);
+            youragv.moveToEnd(myGrid, _start2,_end);
         }
 
-        private void Drawing_State_Tick(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-
+            youragv.CreateAGV(myGrid, "mitsotakis", 0, 40);
         }
-
-      
 
         
-
-  
-
-     
 
     }
 }

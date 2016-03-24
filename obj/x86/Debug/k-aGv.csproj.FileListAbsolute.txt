@@ -7,3 +7,6 @@ C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\WindowsFormsApplication1.
 C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\WindowsFormsApplication1.ATEI_SplashScreen.resources
 C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\k-aGv.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\k-aGv.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Debug\Classes\AGV.cs
+C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Debug\Classes\Sensors.cs
+C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Debug\Classes\Grid.cs
