@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms; //same imports as form1.cs.who cares for memory
+using System.IO;
 
 
 namespace WindowsFormsApplication1
@@ -36,6 +37,10 @@ namespace WindowsFormsApplication1
 
         public bool isFinished = false;
         protected SolidBrush anim_brush = new SolidBrush(Color.Green);
+
+
+        protected PictureBox pb = new PictureBox(); 
+        string agv_pic = Directory.GetCurrentDirectory() + "\\klark.png";
 
 
         public int startX;
@@ -256,12 +261,17 @@ namespace WindowsFormsApplication1
                     }
                 }
             }
+            
             handledGrid.gridGraphics.FillRectangle(anim_brush,
                 handledGrid.x_size - handledGrid.resolution,
                 handledGrid.y_size - handledGrid.resolution,
                 handledGrid.resolution, handledGrid.resolution);
-            isFinished = true;
+             
 
+
+
+            isFinished = true;
+            
 
             return true;
         }
@@ -277,18 +287,33 @@ namespace WindowsFormsApplication1
                 {
                     if (cellx * _grid.resolution == i && celly * _grid.resolution == j)
                     {
+                        /*
                         _grid.gridGraphics.FillRectangle(
                             anim_brush,
                             _grid.array_of_points[i, j].X,
                             _grid.array_of_points[i, j].Y, 
                             _grid.resolution,
                             _grid.resolution);
+                        */
+
+                        
+                        Form.Controls.Add(pb);
+                        pb.BringToFront();
+                        _grid.gridPanel.SendToBack();
+                        pb.Image = new Bitmap(agv_pic);
+                        pb.Width = _grid.resolution;
+                        pb.Height = _grid.resolution;
+                        pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pb.Location = new Point(
+                            _grid.location_x + _grid.array_of_points[i, j].X,
+                            _grid.location_y + _grid.array_of_points[i, j].Y);
                     }
+                    
 
                 }
             }
             Application.DoEvents();
-            System.Threading.Thread.Sleep(100);
+            System.Threading.Thread.Sleep(50);
             Application.DoEvents();
         }
 

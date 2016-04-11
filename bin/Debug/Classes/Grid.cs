@@ -101,6 +101,7 @@ namespace WindowsFormsApplication1
 
                 //Create panel and add it's properties
                 gridPanel = new Panel();
+                gridPanel.SendToBack();
                 //Create the Checkbox.Why here?cuz we want to handle it's event."just a fast solution"
                 cb = new CheckBox();
                 //Create the label.Why?Same reason as above
