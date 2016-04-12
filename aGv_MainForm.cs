@@ -52,8 +52,8 @@ namespace WindowsFormsApplication1
 
         private void gridBtn_Click(object sender, EventArgs e)
         {
-            
-            myGrid.drawGrid(this,300, 300,200,20,10);
+            //just to see the animation
+            myGrid.drawGrid(this,300, 300,200,20,30);
             
             button1.Visible = true;
             Point_array.Visible = true;
@@ -116,8 +116,8 @@ namespace WindowsFormsApplication1
             myagv.moveToEnd(myGrid,_start, _end);
            
 
-            Point _start2 = new Point(youragv.startX, youragv.startY);
-            youragv.moveToEnd(myGrid, _start2,_end);
+            //Point _start2 = new Point(youragv.startX, youragv.startY);
+            //youragv.moveToEnd(myGrid, _start2,_end);
         }
 
         private void button4_Click(object sender, EventArgs e)

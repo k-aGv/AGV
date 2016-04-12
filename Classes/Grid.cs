@@ -294,15 +294,20 @@ namespace WindowsFormsApplication1
         }
         public void refreshGrid()
         {
-            gridGraphics.Clear(gridPanel.BackColor);
             int a, b;
+
+            //speed up the refresh animation rate by lowering grid's paint quality.
+            //  !care
+            gridGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bicubic;
             for (a = 0; a < x_size; a += resolution)
             {
                 gridGraphics.DrawLine(gridpen, a, 0, a, x_size);
+               
             }
             for (b = 0; b < y_size; b += resolution)
             {
                 gridGraphics.DrawLine(gridpen, 0, b, y_size, b);
+               
             }
         }
        

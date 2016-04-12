@@ -37,15 +37,17 @@ namespace WindowsFormsApplication1
 
         public bool isFinished = false;
         protected SolidBrush anim_brush = new SolidBrush(Color.Green);
+        protected Pen anim_pen = new Pen(Color.Black);
 
 
-        protected PictureBox pb = new PictureBox(); 
-        string agv_pic = Directory.GetCurrentDirectory() + "\\klark.png";
+         protected PictureBox pb = new PictureBox(); 
+         static string agv_pic = Directory.GetCurrentDirectory() + "\\klark.png";
+         protected Image agv_png = Image.FromFile(agv_pic);
 
 
         public int startX;
         public int startY;
-        public Graphics agvGraphics;
+        public Graphics agvGraphics;//used while creating agv.(was a GDI rectangle.now its picturebox)
 
 
 
@@ -62,15 +64,25 @@ namespace WindowsFormsApplication1
                 return false;
             }
 
-            SolidBrush b = new SolidBrush(Color.Red);
-            agvGraphics = handledGrid.gridGraphics;
-            agvGraphics.FillRectangle(b
-                , startx
-                , starty
-                , handledGrid.resolution
-                , handledGrid.resolution);
+            /*
+             * replacing rectangle with picturebox 
+             * automatically fixes the instant recreation of the agv.
+             * Before that fix,if u pressed on ''create agv'' button ,nothing happent
+             * its now works fine
+             */
 
+            pb.Image = agv_png;
 
+            pb.BackColor = Color.Transparent;
+            // -+1 to fit in cell.
+            pb.Width = handledGrid.resolution-1;
+            pb.Height = handledGrid.resolution-1;
+            pb.SizeMode = PictureBoxSizeMode.StretchImage;
+            pb.Location = new Point(
+                 startx + 1,
+                 starty + 1);
+            handledGrid.gridPanel.Controls.Add(pb);
+           
 
             startX = startx;
             startY = starty;
@@ -276,9 +288,10 @@ namespace WindowsFormsApplication1
             return true;
         }
 
-
+        
         private void agv_anim(Grid _grid, int cellx, int celly) //int xsize, int ysize, int res)
         {
+            
             LocationX = cellx;
             LocationY = celly;
             for (int j = 0; j < _grid.x_size; j = j + _grid.resolution)
@@ -296,18 +309,28 @@ namespace WindowsFormsApplication1
                             _grid.resolution);
                         */
 
-                        
-                        Form.Controls.Add(pb);
-                        pb.BringToFront();
-                        _grid.gridPanel.SendToBack();
-                        pb.Image = new Bitmap(agv_pic);
-                        pb.Width = _grid.resolution;
-                        pb.Height = _grid.resolution;
+
+                        pb.Image = agv_png;
+
                         pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                       
+                        //backcolor = transparent is working like this:
+                        //NOT ACTUALLY TRANSPARENT BUT ADAPTS THE PARENT'S BACKCOLOR.
+                        pb.Parent = _grid.gridPanel;
+                        pb.BackColor = Color.Transparent;
+                        // -+1 to fit in cell.
+                        //should be in a protected void function but its ok for now
+                        pb.Width = _grid.resolution - 1;
+                        pb.Height = _grid.resolution - 1;
                         pb.Location = new Point(
-                            _grid.location_x + _grid.array_of_points[i, j].X,
-                            _grid.location_y + _grid.array_of_points[i, j].Y);
+                             _grid.array_of_points[i, j].X+1,
+                             _grid.array_of_points[i, j].Y+1);
+
+                        _grid.refreshGrid();//clears first cell of agv but ok...we'll see.
+                        _grid.gridPanel.Controls.Add(pb);
+                       
                     }
+
                     
 
                 }
