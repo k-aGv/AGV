@@ -14,6 +14,8 @@ namespace WindowsFormsApplication1
     {
         //initialize our classes
         AGV myagv = new AGV();
+        
+
         AGV youragv = new AGV();
 
         Watcher myagvWatcher = new Watcher();
@@ -53,7 +55,7 @@ namespace WindowsFormsApplication1
         private void gridBtn_Click(object sender, EventArgs e)
         {
             //just to see the animation
-            myGrid.drawGrid(this,300, 300,200,20,30);
+            myGrid.drawGrid(this,300, 300,200,20,10);
             
             button1.Visible = true;
             Point_array.Visible = true;
@@ -99,7 +101,11 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            myagv.CreateAGV(myGrid,"tsipras", 0,0);
+            
+            myagv.CreateAGV(myGrid,"tsipras", 30,30,1);
+           
+            
+            
         }
 
 
@@ -116,13 +122,13 @@ namespace WindowsFormsApplication1
             myagv.moveToEnd(myGrid,_start, _end);
            
 
-            //Point _start2 = new Point(youragv.startX, youragv.startY);
-            //youragv.moveToEnd(myGrid, _start2,_end);
+           // Point _start2 = new Point(youragv.startX, youragv.startY);
+          //  youragv.moveToEnd(myGrid, _start2,_end);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            youragv.CreateAGV(myGrid, "mitsotakis", 0, 40);
+            youragv.CreateAGV(myGrid, "mitsotakis", 30, 150,1);
         }
 
         

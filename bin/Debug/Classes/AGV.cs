@@ -15,7 +15,6 @@ namespace WindowsFormsApplication1
     {
 
 
-
         /*
          *get;set; method
          *Used to dynamically declare a Form UI to a non-GUIed class.
@@ -40,15 +39,16 @@ namespace WindowsFormsApplication1
         protected Pen anim_pen = new Pen(Color.Black);
 
 
-         protected PictureBox pb = new PictureBox(); 
-         static string agv_pic = Directory.GetCurrentDirectory() + "\\klark.png";
-         protected Image agv_png = Image.FromFile(agv_pic);
+        protected PictureBox pb = new PictureBox();
+        static string agv_pic = Directory.GetCurrentDirectory() + "\\klark.png";
+        protected Image agv_png = Image.FromFile(agv_pic);
 
 
         public int startX;
         public int startY;
-        public Graphics agvGraphics;//used while creating agv.(was a GDI rectangle.now its picturebox)
 
+        protected Rectangle aoe_sensor;
+        protected int aoe_value;//blocks around agv
 
 
         /*
@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
          */
 
         //Declaration of CreateAGV()
-        public bool CreateAGV(Grid handledGrid, string agvName, int startx, int starty)
+        public bool CreateAGV(Grid handledGrid, string agvName, int startx, int starty, int selected_aoe)
         {
             if (handledGrid == null)
             {
@@ -75,18 +75,22 @@ namespace WindowsFormsApplication1
 
             pb.BackColor = Color.Transparent;
             // -+1 to fit in cell.
-            pb.Width = handledGrid.resolution-1;
-            pb.Height = handledGrid.resolution-1;
+            pb.Width = handledGrid.resolution - 1;
+            pb.Height = handledGrid.resolution - 1;
             pb.SizeMode = PictureBoxSizeMode.StretchImage;
             pb.Location = new Point(
                  startx + 1,
                  starty + 1);
             handledGrid.gridPanel.Controls.Add(pb);
-           
+
 
             startX = startx;
             startY = starty;
             name = agvName;
+            LocationX = pb.Location.X;
+            LocationY = pb.Location.Y;
+            aoe_value = selected_aoe;
+            CreateSensor(handledGrid);
 
             return true;
 
@@ -96,7 +100,7 @@ namespace WindowsFormsApplication1
         //declaration of moveToEnd()
         public bool moveToEnd(Grid handledGrid, Point startPoint, Point endPoint)
         {
-            
+
             int i = startPoint.X / handledGrid.resolution, j = startPoint.Y / handledGrid.resolution;
             endLocationX = endPoint.X;
             endLocationY = endPoint.Y;
@@ -273,47 +277,39 @@ namespace WindowsFormsApplication1
                     }
                 }
             }
-            
+
             handledGrid.gridGraphics.FillRectangle(anim_brush,
                 handledGrid.x_size - handledGrid.resolution,
                 handledGrid.y_size - handledGrid.resolution,
                 handledGrid.resolution, handledGrid.resolution);
-             
-
-
 
             isFinished = true;
-            
+
 
             return true;
         }
 
-        
-        private void agv_anim(Grid _grid, int cellx, int celly) //int xsize, int ysize, int res)
+
+        private void agv_anim(Grid _grid, int cellx, int celly) 
         {
-            
+
             LocationX = cellx;
             LocationY = celly;
+            
             for (int j = 0; j < _grid.x_size; j = j + _grid.resolution)
             {
                 for (int i = 0; i < _grid.y_size; i = i + _grid.resolution)
                 {
+                    
                     if (cellx * _grid.resolution == i && celly * _grid.resolution == j)
                     {
-                        /*
-                        _grid.gridGraphics.FillRectangle(
-                            anim_brush,
-                            _grid.array_of_points[i, j].X,
-                            _grid.array_of_points[i, j].Y, 
-                            _grid.resolution,
-                            _grid.resolution);
-                        */
-
+                        LocationX = pb.Location.X;
+                        LocationY = pb.Location.Y;
 
                         pb.Image = agv_png;
 
                         pb.SizeMode = PictureBoxSizeMode.StretchImage;
-                       
+
                         //backcolor = transparent is working like this:
                         //NOT ACTUALLY TRANSPARENT BUT ADAPTS THE PARENT'S BACKCOLOR.
                         pb.Parent = _grid.gridPanel;
@@ -323,24 +319,66 @@ namespace WindowsFormsApplication1
                         pb.Width = _grid.resolution - 1;
                         pb.Height = _grid.resolution - 1;
                         pb.Location = new Point(
-                             _grid.array_of_points[i, j].X+1,
-                             _grid.array_of_points[i, j].Y+1);
+                             _grid.array_of_points[i, j].X + 1,
+                             _grid.array_of_points[i, j].Y + 1);
 
-                        _grid.refreshGrid();//clears first cell of agv but ok...we'll see.
-                        _grid.gridPanel.Controls.Add(pb);
+
+                        _grid.refreshGrid();//refresh grid lines
                        
+                        //never forget the aoe of sensor
+
+                        //FIND A WAY TO DELETE THE OLD SENSOR AOE!!!!!!!!
+                        createAOE( _grid.resolution);
+                        _grid.gridGraphics.DrawRectangle(anim_pen, aoe_sensor);
+                        
+
+                        _grid.gridPanel.Controls.Add(pb);
+
                     }
 
-                    
 
                 }
+                
             }
+
+
             Application.DoEvents();
             System.Threading.Thread.Sleep(50);
             Application.DoEvents();
+
+
         }
 
-       
+
+        protected void createAOE(int aoe_res)
+        {
+            anim_pen.Color = Color.Red;
+            anim_pen.Width = 3;
+            aoe_sensor = new Rectangle(
+                LocationX-(aoe_value*aoe_res),
+                LocationY-(aoe_value*aoe_res),
+                2*(aoe_value*aoe_res)+aoe_res  ,
+                2*(aoe_value*aoe_res)+aoe_res
+                );
+            //Rectangle needs (x start,y start,DX CALCULATED FROM XSTART,DY CALCULATED FROM YSTART
+            //so,we have 2*() because we need the same amount of blocks drawn upper left of agv,to be drawn at the bottom right
+            //+aoe_res because ''top left'' actually means ''take the top left corner but not the CURRENT BLOCK
+            //why not simply ((aoe_value+1) * aoe_res))?Because 2* will affect the whole calculation.
+
+            
+        }
+
+        public bool CreateSensor(Grid agvs_grid)
+        {
+
+            createAOE(agvs_grid.resolution);
+            agvs_grid.gridGraphics.DrawRectangle(anim_pen, aoe_sensor);
+
+            return true;
+        }
+
+
+
     }
 
 

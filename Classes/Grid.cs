@@ -42,17 +42,15 @@ namespace WindowsFormsApplication1
 
         protected Label drawStateLabel;
 
+        protected Point clickedPoint;
+        
 
-        /*
-         * Create 2 instances of graphics.
-         * Why?
-         * 1 instance is only for the grid...the lines.
-         * other instance will be the agv movement.
-         * This will help us use the .Clear() method safely
-         */
         public Graphics gridGraphics;
         protected Pen gridpen = new Pen(Color.Black);
+        protected SolidBrush brush = new SolidBrush(Color.Black);
 
+        protected Rectangle[] Recs;
+        protected int counterRecs = 0;
 
 
 
@@ -217,7 +215,8 @@ namespace WindowsFormsApplication1
                 y_size = Grid_Height;
                 x_blocks = Grid_Width / res;
                 y_blocks = Grid_Height / res;
-                
+
+                Recs = new Rectangle[1000];
 
                 //everything done as we'd liked to.
                 return true;
@@ -242,13 +241,19 @@ namespace WindowsFormsApplication1
             {
                 //initialize the sender
                 Panel myPanel = sender as Panel;
-                Point clickedPoint;
-               // block_type=new int[x_blocks,y_blocks];
-
+               
                 clickedPoint = getClickPoint(e.X, e.Y);
                 gridGraphics = myPanel.CreateGraphics();
-                SolidBrush b = new SolidBrush(Color.Black);
-                gridGraphics.FillRectangle(b, clickedPoint.X, clickedPoint.Y, resolution, resolution);
+
+                
+                counterRecs++;
+                Rectangle _tempRec = new Rectangle(clickedPoint.X, clickedPoint.Y, resolution, resolution);
+               // MessageBox.Show(counterRecs + "");
+               // MessageBox.Show(clickedPoint.X + " " + clickedPoint.Y + " " + resolution + " " + resolution);
+                Recs[counterRecs] = _tempRec;
+
+                gridGraphics.FillRectangle(brush, Recs[counterRecs]);
+                
 
                 block_type[clickedPoint.X/resolution, clickedPoint.Y/resolution] = 3;
                 
@@ -258,7 +263,7 @@ namespace WindowsFormsApplication1
 
         /*
          * tricky way to break the nested loop.
-         * -Why no break?because a single break will break only the nested for.
+         * -Why no break?because a single break will break only the nested for().
          * -why no goto?because 2016.
          */
         protected Point getClickPoint(int _x,int _y)
@@ -295,20 +300,36 @@ namespace WindowsFormsApplication1
         public void refreshGrid()
         {
             int a, b;
-
             //speed up the refresh animation rate by lowering grid's paint quality.
             //  !care
             gridGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bicubic;
+            
+            gridGraphics.Clear(gridPanel.BackColor);
+
+            gridPanel.SuspendLayout();
+            //Using -O3 optimization for For() loops
             for (a = 0; a < x_size; a += resolution)
             {
                 gridGraphics.DrawLine(gridpen, a, 0, a, x_size);
-               
-            }
+                
+            }  
+            gridPanel.ResumeLayout();
+            gridPanel.SuspendLayout();
             for (b = 0; b < y_size; b += resolution)
             {
                 gridGraphics.DrawLine(gridpen, 0, b, y_size, b);
                
             }
+
+
+            //refresh obstacles
+            for (int _i = 0; _i <= counterRecs; _i++)
+            {
+                gridGraphics.FillRectangle(brush,Recs[_i]);
+            }
+          
+            gridPanel.ResumeLayout();
+
         }
        
 

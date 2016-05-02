@@ -55,9 +55,6 @@
     <Compile Include="Classes\AGV.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Classes\Sensors.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Classes\Grid.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
