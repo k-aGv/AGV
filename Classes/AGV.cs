@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1
     class AGV
     {
 
-
+        
         /*
          *get;set; method
          *Used to dynamically declare a Form UI to a non-GUIed class.
@@ -49,6 +49,8 @@ namespace WindowsFormsApplication1
 
         protected Rectangle aoe_sensor;
         protected int aoe_value;//blocks around agv
+
+        protected int battery = 100;
 
 
         /*
@@ -289,10 +291,10 @@ namespace WindowsFormsApplication1
             return true;
         }
 
-
+        protected int steps = 0;
         private void agv_anim(Grid _grid, int cellx, int celly) 
         {
-
+            //int steps = 0;
             LocationX = cellx;
             LocationY = celly;
             
@@ -334,6 +336,9 @@ namespace WindowsFormsApplication1
 
                         _grid.gridPanel.Controls.Add(pb);
 
+                        //steps++;
+                        battery_stats(steps++);
+                        _grid.Batlab.Text = "Battery Level:"+battery+" %";
                     }
 
 
@@ -345,8 +350,17 @@ namespace WindowsFormsApplication1
             Application.DoEvents();
             System.Threading.Thread.Sleep(50);
             Application.DoEvents();
+            
 
+        }
+        
+        
 
+        protected int battery_stats(int steps)
+        {
+            if (steps % 3 == 0)
+                battery--;
+            return battery;
         }
 
 

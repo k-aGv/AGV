@@ -101,7 +101,6 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
             myagv.CreateAGV(myGrid,"tsipras", 30,30,1);
            
             

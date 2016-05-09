@@ -7,6 +7,16 @@ C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\WindowsFormsApplication1.
 C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\WindowsFormsApplication1.ATEI_SplashScreen.resources
 C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Debug\Classes\AGV.cs
 C:\Users\Administrator\Desktop\k-aGv\AGV\bin\Debug\Classes\Grid.cs
-C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\obj\x86\Debug\AGV.exe
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\obj\x86\Debug\AGV.pdb
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\bin\Debug\Classes\AGV.cs
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\bin\Debug\Classes\Grid.cs
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\bin\Debug\AGV.exe
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\bin\Debug\AGV.pdb
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\obj\x86\Debug\WindowsFormsApplication1.aGv_MainForm.resources
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\obj\x86\Debug\WindowsFormsApplication1.ATEI_SplashScreen.resources
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\obj\x86\Debug\k-aGv.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\New folder\k-aGv\AGV\obj\x86\Debug\k-aGv.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\k-aGv.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\k-aGv\AGV\obj\x86\Debug\k-aGv.csproj.GenerateResource.Cache

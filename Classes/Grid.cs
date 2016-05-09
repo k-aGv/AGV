@@ -34,6 +34,7 @@ namespace WindowsFormsApplication1
         public Point[,] array_of_points ;
         public int resolution;
         public Panel gridPanel;
+        public Label Batlab;
 
         public int[,] block_type;
 
@@ -104,6 +105,7 @@ namespace WindowsFormsApplication1
                 cb = new CheckBox();
                 //Create the label.Why?Same reason as above
                 drawStateLabel = new Label();
+                Batlab = new Label();
 
                 //Dynamically handle new click event to the detached Panel we created
                 gridPanel.MouseClick += new MouseEventHandler(myPanel_MouseClick);
@@ -121,6 +123,11 @@ namespace WindowsFormsApplication1
                 Point labelLocation = new Point(526, 300);
                 drawStateLabel.Location = labelLocation;
                 drawStateLabel.Text = "Nothing";
+
+                //battery stats Label's Properties
+                Point BATlabLocation = new Point(806, 300);
+                Batlab.Location = BATlabLocation;
+                
                 
 
 
@@ -140,6 +147,8 @@ namespace WindowsFormsApplication1
                 Handled_Form.Controls.Add(cb);
                 //send Label to Main Form
                 Handled_Form.Controls.Add(drawStateLabel);
+                //send battery Label to Main Form
+                Handled_Form.Controls.Add(Batlab);
 
                 //Create the graphics interface and create the rectangle-step
                 gridGraphics = gridPanel.CreateGraphics();
