@@ -29,12 +29,22 @@ namespace WindowsFormsApplication1
             Splash.Show();
             Splash.Dispose();
             InitializeComponent();
-
+            
             
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //just in case
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.UserPaint |
+                          ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.ResizeRedraw |
+                          ControlStyles.ContainerControl |
+                          ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.SupportsTransparentBackColor
+                          , true);
+
             button1.Visible = false;
             Point_array.Visible = false;
             //Dynamically create a shadow of this form , to the classes we made
@@ -121,8 +131,8 @@ namespace WindowsFormsApplication1
             myagv.moveToEnd(myGrid,_start, _end);
            
 
-           // Point _start2 = new Point(youragv.startX, youragv.startY);
-          //  youragv.moveToEnd(myGrid, _start2,_end);
+            Point _start2 = new Point(youragv.startX, youragv.startY);
+            youragv.moveToEnd(myGrid, _start2,_end);
         }
 
         private void button4_Click(object sender, EventArgs e)
