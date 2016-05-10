@@ -306,30 +306,31 @@ namespace WindowsFormsApplication1
             Point failPoint = new Point(-1, -1);
             return failPoint;
         }
+        
         public void refreshGrid()
         {
+            
             int a, b;
+            
             //speed up the refresh animation rate by lowering grid's paint quality.
             //  !care
             gridGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bicubic;
             
             gridGraphics.Clear(gridPanel.BackColor);
 
-            gridPanel.SuspendLayout();
+            
             //Using -O3 optimization for For() loops
             for (a = 0; a < x_size; a += resolution)
             {
                 gridGraphics.DrawLine(gridpen, a, 0, a, x_size);
                 
             }  
-            gridPanel.ResumeLayout();
-            gridPanel.SuspendLayout();
+            
             for (b = 0; b < y_size; b += resolution)
             {
                 gridGraphics.DrawLine(gridpen, 0, b, y_size, b);
                
             }
-
 
             //refresh obstacles
             for (int _i = 0; _i <= counterRecs; _i++)
@@ -337,7 +338,7 @@ namespace WindowsFormsApplication1
                 gridGraphics.FillRectangle(brush,Recs[_i]);
             }
           
-            gridPanel.ResumeLayout();
+         
 
         }
        
